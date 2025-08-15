@@ -14,17 +14,17 @@
 This project is a web-based, production-grade conversational AI agent that enables seamless voice interaction with an AI. It takes a user's spoken input, processes it through a series of AI services, and returns a spoken and textual response. This architecture ensures a smooth, real-time conversational flow with a user-friendly interface.
 
 ## ✨ Features
- 🎙️ Voice-to-Text Transcription: Utilizes the powerful **AssemblyAI** SDK to accurately convert spoken language into text.
+ 🎙️ **Voice-to-Text Transcription:** Utilizes the powerful **AssemblyAI** SDK to accurately convert spoken language into text.
 
- 🧠 AI-Powered Chat: Leverages the **Google Gemini** model to generate intelligent and context-aware responses.
+ 🧠 **AI-Powered Chat:** Leverages the **Google Gemini** model to generate intelligent and context-aware responses.
 
- 🔊 Text-to-Speech Generation: Uses the **Murf AI** platform to synthesize the AI's text responses into natural-sounding audio.* 🌐 Modern UI: A clean, responsive, and interactive user interface with a glassmorphic design.
+ 🔊 **Text-to-Speech Generation:** Uses the **Murf AI** platform to synthesize the AI's text responses into natural-sounding audio.* 🌐 Modern UI: A clean, responsive, and interactive user interface with a glassmorphic design.
 
- 💾 Dynamic Chat History: Maintains a per-session conversation history to provide context for the AI's responses.
+ 💾 **Dynamic Chat History:** Maintains a per-session conversation history to provide context for the AI's responses.
 
- 🚦 Intelligent Status Bar: The UI's status bar dynamically changes color and animation to indicate the current state (Ready, Recording,  Processing, Replying).
+ 🚦 **Intelligent Status Bar:** The UI's status bar dynamically changes color and animation to indicate the current state (Ready, Recording,  Processing, Replying).
 
- 🛡️ Robust Error Handling: The backend is designed to gracefully handle failures from any of the external APIs, providing a fallback message and audio to the user.
+ 🛡️ **Robust Error Handling:** The backend is designed to gracefully handle failures from any of the external APIs, providing a fallback message and audio to the user.
 
 ## 🛠 Technologies Used
  **Backend**: Python with `FastAPI`
