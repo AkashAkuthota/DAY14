@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Conversational AI Agent
 
 > 🧠 Real‑time voice conversations with AI — sleek glassmorphic UI + production‑grade backend  
@@ -150,5 +149,4 @@ That’s a wrap for this build in the **#30DaysOfAIVoiceAgents** challenge.
 Your support, feedback, and suggestions mean a lot! 💡💬  
 Follow along for more AI experiments — see you in the next project! 🚀🎙
 =======
-# DAY14
->>>>>>> bc62203621cb6ffb1919235937850745d10eeb28
+
