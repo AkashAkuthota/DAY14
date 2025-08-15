@@ -69,10 +69,10 @@ The application follows a client-server model with a multi-stage, server-side pr
 
 ### Step 2: Install dependencies
 
-Install the required Python libraries using `pip`. The `python-multipart` library is necessary for handling file uploads.
+Install the required Python libraries listed in `requirements.txt` using pip:
 
 ```
-pip install fastapi uvicorn python-multipart assemblyai murf google-generativeai
+pip install -r requirements.txt
 ```
 
 ### Step 3: Set up environment variables
@@ -142,11 +142,21 @@ Open your web browser and navigate to `http://127.0.0.1:8000` to access the conv
 - Test in Chrome or Edge for the best compatibility.
 
 ---
+## 📝 Additional Suggestions
+
+- Add a `.gitignore` file to exclude files like `.DS_Store`, `__pycache__`, and `.env` to keep the repo clean.
+
+- Consider adding a brief project description and usage example to the README for clarity.
+
+- Include information about the `services/` directory to highlight modular code design.
+
+- Always keep API keys secure; do not commit secrets to the repository.
+
+---
 
 ### 👋 Thanks for Watching & Reading!
 
 That’s a wrap for this build in the **#30DaysOfAIVoiceAgents** challenge.  
 Your support, feedback, and suggestions mean a lot! 💡💬  
 Follow along for more AI experiments — see you in the next project! 🚀🎙
-=======
 
