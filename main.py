@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Request
+from fastapi import FastAPI, File, UploadFile, Request, WebSocket
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import os
@@ -7,10 +7,7 @@ from services.stt_service import STTService
 from services.tts_service import TTSService
 from services.llm_service import LLMService
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s'
-)
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
@@ -51,33 +48,21 @@ async def agent_chat(session_id: str, file: UploadFile = File(...)):
             raise ValueError("No audio bytes received")
     except Exception as e:
         logger.error(f"Input error: {e}")
-        return ChatResponse(transcription="", llm_response=FALLBACK_TEXT,
-                            audioFiles=try_fallback_tts(),
-                            chat_history=chat_sessions.get(session_id, []),
-                            error={"stage": "input", "message": str(e)})
+        return ChatResponse(transcription="", llm_response=FALLBACK_TEXT, audioFiles=try_fallback_tts(), chat_history=chat_sessions.get(session_id, []), error={"stage": "input", "message": str(e)})
 
     user_text = stt_service.transcribe(audio_bytes)
     if not user_text.strip():
         logger.error("Empty transcription.")
-        return ChatResponse(transcription="", llm_response=FALLBACK_TEXT,
-                            audioFiles=try_fallback_tts(),
-                            chat_history=chat_sessions.get(session_id, []),
-                            error={"stage": "stt", "message": "Empty transcription"})
+        return ChatResponse(transcription="", llm_response=FALLBACK_TEXT, audioFiles=try_fallback_tts(), chat_history=chat_sessions.get(session_id, []), error={"stage": "stt", "message": "Empty transcription"})
 
     session = chat_sessions.setdefault(session_id, [])
     session.append({"role": "user", "content": user_text})
-
-    dialog = "\n".join(
-        ("User: " if m["role"] == "user" else "AI: ") + m["content"] for m in session
-    ) + "\nAI:"
+    dialog = "\n".join(("User: " if m["role"] == "user" else "AI: ") + m["content"] for m in session) + "\nAI:"
     llm_text = llm_service.get_response(dialog)
     if not llm_text.strip():
         session.append({"role": "assistant", "content": FALLBACK_TEXT})
         logger.error("Empty LLM output.")
-        return ChatResponse(transcription=user_text, llm_response=FALLBACK_TEXT,
-                            audioFiles=try_fallback_tts(),
-                            chat_history=session,
-                            error={"stage": "llm", "message": "Empty LLM output"})
+        return ChatResponse(transcription=user_text, llm_response=FALLBACK_TEXT, audioFiles=try_fallback_tts(), chat_history=session, error={"stage": "llm", "message": "Empty LLM output"})
 
     session.append({"role": "assistant", "content": llm_text})
 
@@ -515,3 +500,11 @@ async def serve_ui(request: Request):
 </body>
 </html>
 """)
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        await websocket.send_text(f"Echo: {data}")
